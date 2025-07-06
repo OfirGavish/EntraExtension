@@ -1,0 +1,122 @@
+/* Button row for top action buttons */
+.button-row {
+	display: flex;
+	gap: 10px;
+	margin-bottom: 14px;
+}
+.button-row button {
+	flex: 1 1 0;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+body {
+	font-family: 'Segoe UI', Arial, sans-serif;
+	width: 320px;
+	padding: 16px 14px 14px 14px;
+	background: #181f2a;
+	color: #f3f6fa;
+	border-radius: 12px;
+	box-shadow: 0 2px 16px 0 #0008;
+}
+h2 {
+	font-size: 20px;
+	color: #4ea1ff;
+	margin-bottom: 12px;
+	letter-spacing: 0.5px;
+}
+label {
+	display: block;
+	margin-top: 14px;
+	margin-bottom: 4px;
+	color: #b3c7e6;
+	font-size: 14px;
+}
+input {
+	width: 100%;
+	margin-bottom: 8px;
+	padding: 8px 10px;
+	border: 1px solid #26334d;
+	border-radius: 6px;
+	background: #232b3a;
+	color: #f3f6fa;
+	font-size: 15px;
+	transition: border 0.2s;
+}
+input:focus {
+	outline: none;
+	border: 1.5px solid #4ea1ff;
+	background: #232b3a;
+}
+button {
+	margin-top: 7px;
+	width: 100%;
+	padding: 9px 0;
+	background: linear-gradient(90deg, #2563eb 0%, #4ea1ff 100%);
+	color: #fff;
+	border: none;
+	border-radius: 6px;
+	font-size: 15px;
+	font-weight: 600;
+	cursor: pointer;
+	box-shadow: 0 1px 4px 0 #0004;
+	transition: background 0.2s, color 0.2s;
+}
+button:hover, button:focus {
+	background: linear-gradient(90deg, #4ea1ff 0%, #2563eb 100%);
+	color: #e0eaff;
+}
+#groupsList {
+	margin: 14px 0 10px 0;
+	max-height: 120px;
+	overflow-y: auto;
+	background: #202736;
+	border-radius: 6px;
+	padding: 6px 0;
+	border: 1px solid #26334d;
+}
+#groupsList div {
+	padding: 4px 10px;
+	border-radius: 4px;
+	transition: background 0.15s;
+}
+#groupsList div:hover {
+	background: #223a5e;
+}
+#status {
+	margin-top: 12px;
+	color: #4ea1ff;
+	font-size: 14px;
+	min-height: 18px;
+}
+.dropdown {
+	position: relative;
+	background: #232b3a;
+	border: 1px solid #26334d;
+	max-height: 120px;
+	overflow-y: auto;
+	z-index: 1000;
+	width: 100%;
+	display: none;
+	border-radius: 6px;
+	box-shadow: 0 2px 8px 0 #0006;
+}
+.dropdown .dropdown-item {
+	padding: 7px 12px;
+	cursor: pointer;
+	color: #f3f6fa;
+	font-size: 15px;
+	border-radius: 4px;
+	transition: background 0.15s, color 0.15s;
+}
+.dropdown .dropdown-item:hover {
+	background: #223a5e;
+	color: #4ea1ff;
+}
+::-webkit-scrollbar {
+	width: 8px;
+	background: #232b3a;
+}
+::-webkit-scrollbar-thumb {
+	background: #26334d;
+	border-radius: 6px;
+}

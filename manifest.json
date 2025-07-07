@@ -1,11 +1,16 @@
 {
   "manifest_version": 3,
-  "name": "Group Membership Copier",
-  "version": "1.0",
-  "description": "Copy group memberships from one user to another.",
+  "name": "Entra ID Group Membership Manager",
+  "version": "1.0.0",
+  "description": "Efficiently copy group memberships between Entra ID users. Secure OAuth 2.0 authentication with intelligent group filtering.",
   "permissions": ["identity", "storage"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
   "action": {
     "default_popup": "popup.html",
+    "default_title": "Entra ID Group Membership Manager",
     "default_icon": {
       "16": "icons/icon16.png",
       "32": "icons/icon32.png",
@@ -13,11 +18,18 @@
       "128": "icons/icon128.png"
     }
   },
-  
   "icons": {
     "16": "icons/icon16.png",
     "32": "icons/icon32.png",
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
-  }
+  },
+  "host_permissions": [
+    "https://login.microsoftonline.com/*",
+    "https://graph.microsoft.com/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "author": "Ofir Gavish"
 }

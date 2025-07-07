@@ -1,5 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang  <h3>3. How   <h3>4. Dat  <h3>5. Security and Authentication</h3>
+  <ul>
+    <li><strong>OAuth 2.0 + PKCE:</strong> The Extension uses industry-standard OAuth 2.0 authorization code flow with PKCE for secure authentication, providing enhanced protection against code interception attacks.</li>
+    <li><strong>Token Security:</strong> All authentication tokens are handled securely and never exposed to external services or websites.</li>
+    <li><strong>User Consent:</strong> You must explicitly sign in with your Microsoft account to use the Extension's features.</li>
+    <li><strong>Session Control:</strong> You can sign out at any time to revoke the Extension's access to your data and clear stored tokens.</li>
+    <li><strong>Permission-Based Access:</strong> All actions are performed with your current account's permissions; the Extension cannot elevate your privileges or access data you are not authorized to access.</li>
+  </ul>age</h3>
+  <ul>
+    <li><strong>Configuration Data:</strong> The Extension stores your Azure AD Application Client ID in your browser's local storage for authentication configuration.</li>
+    <li><strong>Authentication Tokens:</strong> Access tokens and refresh tokens are stored securely in your browser's extension storage and automatically expire according to Microsoft's security policies.</li>
+    <li><strong>No Personal Data Storage:</strong> The Extension does not permanently store any personal information, user profiles, or directory data.</li>
+    <li><strong>Local Processing Only:</strong> All data processing occurs locally in your browser - no data is transmitted to external servers.</li>
+  </ul>e Your Data</h3>
+  <ul>
+    <li>All data access is performed locally in your browser using secure OAuth 2.0 + PKCE authentication and only with your explicit consent.</li>
+    <li>The Extension does <strong>not</strong> store, transmit, or share your personal data with any third-party servers or services.</li>
+    <li>All operations (user search, group fetch, group copy) are performed directly through Microsoft Graph API and are subject to Microsoft's security and privacy controls.</li>
+    <li>Authentication tokens are stored securely in your browser and are never transmitted to external services.</li>
+  </ul>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,15 +32,16 @@
 <body>
   <h1>Privacy Policy</h1>
   <h2>Group Membership Copier Extension</h2>
-  <p><strong>Effective Date:</strong> July 5, 2025</p>
+  <p><strong>Effective Date:</strong> July 8, 2025</p>
 
   <h3>1. Introduction</h3>
   <p>This privacy policy explains how the Group Membership Copier browser extension ("the Extension") accesses and uses your data. By using the Extension, you agree to the terms described in this policy.</p>
 
   <h3>2. What Data We Access</h3>
   <ul>
-    <li><strong>Microsoft Account Information:</strong> The Extension uses Microsoft authentication to sign you in and access Microsoft Graph API on your behalf.</li>
+    <li><strong>Microsoft Account Information:</strong> The Extension uses OAuth 2.0 authorization code flow with PKCE (Proof Key for Code Exchange) to securely authenticate with Microsoft Entra ID (Azure AD) and access Microsoft Graph API on your behalf.</li>
     <li><strong>User and Group Data:</strong> The Extension can read user profiles, group memberships, and add users to groups in your Microsoft Entra (Azure AD) directory, as permitted by your organization's policies and your own account permissions.</li>
+    <li><strong>Authentication Tokens:</strong> The Extension temporarily stores access tokens and refresh tokens in your browser's secure storage to maintain your authenticated session.</li>
   </ul>
 
   <h3>3. How We Use Your Data</h3>
@@ -44,10 +64,17 @@
     <li>All actions are performed with your current account’s permissions; the Extension cannot elevate your privileges or access data you are not authorized to access.</li>
   </ul>
 
-  <h3>6. Changes to This Policy</h3>
+  <h3>6. Third-Party Services</h3>
+  <ul>
+    <li><strong>Microsoft Graph API:</strong> The Extension communicates directly with Microsoft Graph API using your authenticated session. No intermediary services are used.</li>
+    <li><strong>Microsoft Entra ID:</strong> Authentication is handled directly by Microsoft's OAuth 2.0 servers. The Extension does not store or handle your login credentials.</li>
+    <li><strong>No Analytics or Tracking:</strong> The Extension does not use any analytics, tracking, or telemetry services.</li>
+  </ul>
+
+  <h3>7. Changes to This Policy</h3>
   <p>We may update this privacy policy from time to time. Any changes will be posted on this page with an updated effective date.</p>
 
-  <h3>7. Contact</h3>
+  <h3>8. Contact</h3>
   <p>If you have any questions or concerns about this privacy policy or the Extension, please contact us at <a href="mailto:ofir@mscloudninja.com">ofir@mscloudninja.com</a>.</p>
 
 </body>

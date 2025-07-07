@@ -25,16 +25,14 @@
   <div id="settingsModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.6);z-index:1000;align-items:center;justify-content:center;">
     <div style="background:#222;padding:24px 20px 16px 20px;border-radius:8px;min-width:320px;max-width:90vw;box-shadow:0 2px 16px #000;position:relative;">
       <h3 style="margin-top:0;color:#4ea1ff;">Extension Settings</h3>
-      <label for="clientIdInput">Azure AD Client ID:</label><br>
+      <label for="clientIdInput">Entra ID Client ID:</label><br>
       <input type="text" id="clientIdInput" style="width:100%;margin-bottom:10px;"><br>
-      <label for="redirectUriInput">Redirect URI:</label><br>
-      <input type="text" id="redirectUriInput" style="width:100%;margin-bottom:16px;"><br>
+      <div id="detectedUri" style="font-size:11px;color:#888;margin-bottom:16px;"></div>
       <button id="saveSettingsBtn" style="margin-right:10px;">Save</button>
       <button id="closeSettingsBtn">Cancel</button>
       <div id="settingsStatus" style="margin-top:10px;font-size:12px;"></div>
     </div>
   </div>
-  <script src="msal-browser.min.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>

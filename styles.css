@@ -87,6 +87,10 @@ button:hover, button:focus {
 	color: #4ea1ff;
 	font-size: 14px;
 	min-height: 18px;
+	white-space: pre-line; /* Allows line breaks in the status text */
+	word-wrap: break-word; /* Breaks long words if needed */
+	max-height: 120px; /* Limit height for very long error messages */
+	overflow-y: auto; /* Add scrollbar if content is too long */
 }
 .dropdown {
 	position: relative;
@@ -119,4 +123,14 @@ button:hover, button:focus {
 ::-webkit-scrollbar-thumb {
 	background: #26334d;
 	border-radius: 6px;
+}
+#sourceUser {
+  width: 100%;
+  max-width: 100%;     /* Ensures it never exceeds container */
+  box-sizing: border-box;  /* Ensures padding/border doesn't add extra width */
+}
+#targetUser {
+  width: 100%;
+  max-width: 100%;     /* Ensures it never exceeds container */
+  box-sizing: border-box;  /* Ensures padding/border doesn't add extra width */
 }

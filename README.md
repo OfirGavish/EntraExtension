@@ -1,4 +1,4 @@
-# Azure AD Group Membership Copier Extension
+# Entra ID Group Membership Manager Extension by MSCloudNinja
 
 ## Overview
 This Microsoft Edge extension allows Microsoft Entra (Azure AD) administrators to efficiently copy group memberships from one user to another using the Microsoft Graph API. Built with modern OAuth 2.0 + PKCE authentication for maximum security.
@@ -238,7 +238,7 @@ EntraExtension/
 ### Getting Started
 1. Fork the repository
 2. Make your changes
-3. Test thoroughly with your Azure AD environment
+3. Test thoroughly with your Entra environment
 4. Submit a pull request
 
 ### Areas for Contribution

@@ -43,7 +43,7 @@ This Microsoft Edge extension allows Microsoft Entra (Azure AD) administrators t
 
 2. **Click "New registration"**
    - **Name**: `Group Membership Copier` (or your preferred name)
-   - **Supported account types**: `Accounts in this organizational directory only` (single tenant)
+   - **Supported account types**: `Accounts in any organizational directory` (Any Microsoft Entra ID tenant - Multitenant)
    - **Redirect URI**: 
      - Platform: `Single-page application (SPA)`
      - URI: `https://YOUR_EXTENSION_ID.chromiumapp.org/`

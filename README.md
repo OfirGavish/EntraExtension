@@ -1,7 +1,9 @@
 # Azure AD Group Membership Copier Extension
 
 ## Overview
-This Chrome extension allows Microsoft Entra (Azure AD) administrators to efficiently copy group memberships from one user to another using the Microsoft Graph API. Built with modern OAuth 2.0 + PKCE authentication for maximum security.
+This Microsoft Edge extension allows Microsoft Entra (Azure AD) administrators to efficiently copy group memberships from one user to another using the Microsoft Graph API. Built with modern OAuth 2.0 + PKCE authentication for maximum security.
+
+**Browser Compatibility**: Primarily designed for Microsoft Edge, but also compatible with Chrome and other Chromium-based browsers.
 
 ## ✨ Features
 - **🔐 Secure OAuth 2.0 + PKCE Authentication** - Modern, secure authentication flow
@@ -19,7 +21,7 @@ This Chrome extension allows Microsoft Entra (Azure AD) administrators to effici
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Chrome browser (Manifest V3 compatible)
+- Microsoft Edge browser (or Chrome/other Chromium-based browsers)
 - Microsoft Entra ID (Azure AD) admin account with one of these roles:
   - Global Administrator
   - User Administrator
@@ -30,8 +32,8 @@ This Chrome extension allows Microsoft Entra (Azure AD) administrators to effici
 
 ### 1. Install the Extension
 1. Download or clone this repository
-2. Open Chrome and go to `chrome://extensions`
-3. Enable "Developer mode" (toggle in top right)
+2. Open Microsoft Edge and go to `edge://extensions` (or `chrome://extensions` for Chrome)
+3. Enable "Developer mode" (toggle in bottom left for Edge, top right for Chrome)
 4. Click "Load unpacked" and select the `EntraExtension` folder
 5. Note the Extension ID that appears (you'll need this for Azure setup)
 

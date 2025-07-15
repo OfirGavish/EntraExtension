@@ -87,9 +87,27 @@ button:hover, button:focus {
 	padding: 4px 10px;
 	border-radius: 4px;
 	transition: background 0.15s;
+	display: flex;
+	align-items: center;
+	gap: 8px;
 }
 #groupsList div:hover {
 	background: #223a5e;
+}
+#groupsList .group-checkbox {
+	width: auto;
+	margin: 0;
+	padding: 0;
+	flex-shrink: 0;
+	cursor: pointer;
+}
+#groupsList label {
+	margin: 0;
+	padding: 0;
+	color: #f3f6fa;
+	font-size: 15px;
+	cursor: pointer;
+	flex-grow: 1;
 }
 #status {
 	margin-top: 12px;

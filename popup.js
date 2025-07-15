@@ -807,7 +807,7 @@ function renderGroups(groups) {
       groupType = ' (Mail Group)';
     }
     
-    return `<div><input type="checkbox" class="group-checkbox" value="${g.id}" checked> ${g.displayName}${groupType}</div>`;
+    return `<div><input type="checkbox" class="group-checkbox" value="${g.id}" checked id="group-${g.id}"><label for="group-${g.id}">${g.displayName}${groupType}</label></div>`;
   }).join('');
   
   document.getElementById('groupsList').innerHTML = html + 

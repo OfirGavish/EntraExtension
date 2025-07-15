@@ -65,6 +65,15 @@ button:hover, button:focus {
 	background: linear-gradient(90deg, #4ea1ff 0%, #2563eb 100%);
 	color: #e0eaff;
 }
+
+/* Destructive action button styling */
+#removeFromGroups {
+	background: linear-gradient(90deg, #dc2626 0%, #ef4444 100%);
+}
+#removeFromGroups:hover, #removeFromGroups:focus {
+	background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
+}
+
 #groupsList {
 	margin: 14px 0 10px 0;
 	max-height: 120px;

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Group Membership Copier</title>
+  <title>Group Membership Manager</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h2>Copy Group Memberships</h2>
+  <h2>Group Membership Manager</h2>
   <div class="button-row">
     <button id="signInBtn">Sign in with Microsoft</button>
     <button id="settingsBtn">Settings</button>
@@ -16,6 +16,9 @@
   <div id="sourceUserDropdown" class="dropdown"></div>
   <button id="fetchGroups">Fetch Groups</button>
   <div id="groupsList"></div>
+  <div class="button-row" id="groupActionsRow" style="display:none;">
+    <button id="removeFromGroups">Remove from Selected Groups</button>
+  </div>
   <label>Target User:</label>
   <input type="text" id="targetUser" placeholder="Search target user..." autocomplete="off">
   <div id="targetUserDropdown" class="dropdown"></div>

@@ -349,6 +349,107 @@ document.getElementById('copyGroups').addEventListener('click', async () => {
   }
 });
 
+// --- Remove groups logic ---
+document.getElementById('removeFromGroups').addEventListener('click', async () => {
+  if (!isSignedIn) {
+    authStatus.textContent = 'Please sign in first.';
+    authStatus.style.color = 'orange';
+    return;
+  }
+  
+  const sourceUser = sourceUserInput.value.trim();
+  if (!sourceUser) {
+    document.getElementById('status').textContent = 'Please enter a source user.';
+    document.getElementById('status').style.color = 'red';
+    return;
+  }
+  
+  const checked = Array.from(document.querySelectorAll('.group-checkbox:checked'));
+  if (!checked.length) {
+    document.getElementById('status').textContent = 'No groups selected.';
+    document.getElementById('status').style.color = 'red';
+    return;
+  }
+
+  // Confirm the action
+  const groupCount = checked.length;
+  const confirmMessage = `Are you sure you want to remove "${sourceUser}" from ${groupCount} selected group(s)?\n\nThis action cannot be undone.`;
+  
+  if (!confirm(confirmMessage)) {
+    return;
+  }
+  
+  document.getElementById('status').textContent = 'Removing user from groups...';
+  document.getElementById('status').style.color = 'black';
+  
+  try {
+    const token = await getAccessToken();
+    const isAdmin = await checkIfAdmin(token);
+    if (!isAdmin) {
+      document.getElementById('status').textContent = 'You must be an admin to use this extension.';
+      document.getElementById('status').style.color = 'red';
+      return;
+    }
+    
+    const sourceUserId = await getUserIdByEmail(sourceUser, token);
+    let successCount = 0, failCount = 0, skippedCount = 0;
+    const errors = [];
+    const skipped = [];
+    
+    for (const cb of checked) {
+      const groupId = cb.value;
+      const groupName = cb.parentElement.textContent.replace(/^\s*\S+\s*/, '').trim(); // Extract group name
+      
+      // Check if user is actually a member first
+      const isMember = await checkGroupMembership(sourceUserId, groupId, token);
+      if (!isMember) {
+        console.log(`User is not a member of ${groupName}, skipping...`);
+        skippedCount++;
+        skipped.push(groupName);
+        continue;
+      }
+      
+      const result = await removeUserFromGroup(sourceUserId, groupId, token);
+      
+      if (result.success) {
+        successCount++;
+      } else {
+        failCount++;
+        errors.push(`${groupName}: ${result.error}`);
+      }
+    }
+    
+    let statusText = `Done. ${successCount} group(s) removed, ${failCount} failed`;
+    if (skippedCount > 0) {
+      statusText += `, ${skippedCount} skipped (not a member)`;
+    }
+    
+    if (skipped.length > 0) {
+      statusText += `\n\nSkipped (not a member): ${skipped.join(', ')}`;
+    }
+    
+    if (errors.length > 0) {
+      statusText += `\n\nFailure details:\n${errors.join('\n')}`;
+    }
+    
+    document.getElementById('status').textContent = statusText;
+    document.getElementById('status').style.color = failCount ? 'orange' : (successCount > 0 ? 'green' : '#4ea1ff');
+    
+    // Also log detailed info to console for debugging
+    if (skipped.length > 0) {
+      console.log('Groups skipped (not a member):', skipped);
+    }
+    if (errors.length > 0) {
+      console.log('Group removal failures:', errors);
+    }
+  } catch (e) {
+    let msg = e.message || e.toString();
+    if (msg.includes('Insufficient privileges')) msg = 'You do not have permission to remove users from groups.';
+    document.getElementById('status').textContent = `Error: ${msg}`;
+    document.getElementById('status').style.color = 'red';
+  }
+});
+
 // Helper: Check if current user is an admin
 async function checkIfAdmin(token) {
   try {
@@ -570,6 +671,55 @@ async function addUserToGroup(userId, groupId, token) {
   }
 }
 
+// Helper: Remove user from group
+async function removeUserFromGroup(userId, groupId, token) {
+  try {
+    const res = await fetch(`https://graph.microsoft.com/v1.0/groups/${groupId}/members/${userId}/$ref`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    
+    if (!res.ok) {
+      let errorDetails = `${res.status}: ${res.statusText}`;
+      try {
+        const errorData = await res.json();
+        if (errorData.error && errorData.error.message) {
+          // Handle specific common error cases
+          if (errorData.error.message.includes("not found")) {
+            errorDetails = "User is not a member of this group";
+          } else if (errorData.error.message.includes("Forbidden")) {
+            errorDetails = "Access denied - insufficient permissions";
+          } else if (errorData.error.message.includes("not found")) {
+            errorDetails = "Group or user not found";
+          } else {
+            errorDetails += ` - ${errorData.error.message}`;
+          }
+        }
+      } catch (e) {
+        // If JSON parsing fails, try text
+        try {
+          const errorText = await res.text();
+          if (errorText) {
+            errorDetails += ` - ${errorText}`;
+          }
+        } catch (e2) {
+          // If both fail, keep the basic status
+        }
+      }
+      console.error(`Failed to remove user from group ${groupId}:`, res.status, res.statusText, errorDetails);
+      return { success: false, error: errorDetails };
+    }
+    
+    return { success: true };
+  } catch (error) {
+    console.error(`Error removing user from group ${groupId}:`, error);
+    return { success: false, error: error.message };
+  }
+}
+
 // Helper: Authenticate with Microsoft and get access token
 async function authenticateWithMicrosoft() {
   return new Promise((resolve, reject) => {
@@ -642,6 +792,7 @@ async function getUserGroups(userId, token) {
 function renderGroups(groups) {
   if (!groups.length) {
     document.getElementById('groupsList').innerHTML = '<p>No manageable groups found for this user.</p><p style="font-size:12px;color:#b3c7e6;margin-top:8px;">Note: Dynamic groups, mail-enabled security groups, and distribution groups are excluded as they don\'t support manual membership management.</p>';
+    document.getElementById('groupActionsRow').style.display = 'none';
     return;
   }
   
@@ -661,4 +812,7 @@ function renderGroups(groups) {
   
   document.getElementById('groupsList').innerHTML = html + 
     `<p style="font-size:12px;color:#b3c7e6;margin-top:8px;">Showing ${groups.length} manageable groups. Dynamic and distribution groups are excluded.</p>`;
+  
+  // Show the remove button when groups are loaded
+  document.getElementById('groupActionsRow').style.display = 'block';
 }

@@ -1,7 +1,7 @@
-# Entra ID Group Membership Manager Extension by MSCloudNinja
+# Entra ID Group Membership Manager Extension
 
 ## Overview
-This Microsoft Edge extension allows Microsoft Entra (Azure AD) administrators to efficiently copy group memberships from one user to another using the Microsoft Graph API. Built with modern OAuth 2.0 + PKCE authentication for maximum security.
+This Microsoft Edge extension allows Microsoft Entra (Azure AD) administrators to efficiently manage group memberships - copy groups from one user to another or remove users from multiple groups - using the Microsoft Graph API. Built with modern OAuth 2.0 + PKCE authentication for maximum security.
 
 **Browser Compatibility**: Primarily designed for Microsoft Edge, but also compatible with Chrome and other Chromium-based browsers.
 
@@ -17,6 +17,8 @@ This Microsoft Edge extension allows Microsoft Entra (Azure AD) administrators t
 - **🛡️ Multi-tenant Support** - Works across different Azure AD tenants
 - **🔍 Admin Role Detection** - Validates admin permissions before operations
 - **🎯 Group Type Classification** - Clearly identifies Security Groups, Office 365 Groups, and Teams
+- **🚀 Bulk Group Operations** - Copy group memberships to other users or remove users from multiple groups
+- **🔄 Confirmation for Destructive Actions** - Requires confirmation before removing users from groups
 
 ## 🚀 Quick Start
 
@@ -96,6 +98,19 @@ This Microsoft Edge extension allows Microsoft Entra (Azure AD) administrators t
 8. **Review results** - the extension shows:
    - ✅ Successfully copied groups
    - ⏭️ Skipped groups (user already a member)
+   - ❌ Failed groups with detailed error messages
+
+### Removing Group Memberships
+
+1. **Sign in** using the extension popup
+2. **Enter source user** email/UPN in the "Source User" field
+3. **Click "Fetch Groups"** to load their group memberships
+4. **Review and select** the groups you want to remove the user from
+5. **Click "Remove from Selected Groups"** (red button)
+6. **Confirm the action** when prompted (this action cannot be undone)
+7. **Review results** - the extension shows:
+   - ✅ Successfully removed groups
+   - ⏭️ Skipped groups (user was not a member)
    - ❌ Failed groups with detailed error messages
 
 ### Group Type Indicators

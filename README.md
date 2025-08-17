@@ -1,13 +1,14 @@
 # Entra ID Group Membership Manager Extension
 
 ## Overview
-This Microsoft Edge extension allows Microsoft Entra (Azure AD) administrators to efficiently manage group memberships - copy groups from one user to another or remove users from multiple groups - using the Microsoft Graph API. Built with modern OAuth 2.0 + PKCE authentication for maximum security.
+This Microsoft Edge extension allows Microsoft Entra (Azure AD) administrators to efficiently manage group memberships for both **users and devices** - copy groups between objects or remove objects from multiple groups - using the Microsoft Graph API. Built with modern OAuth 2.0 + PKCE authentication for maximum security.
 
 **Browser Compatibility**: Primarily designed for Microsoft Edge, but also compatible with Chrome and other Chromium-based browsers.
 
 ## ✨ Features
 - **🔐 Secure OAuth 2.0 + PKCE Authentication** - Modern, secure authentication flow
 - **👤 Smart User Search** - Auto-complete user search with real-time suggestions
+- **🖥️ Smart Device Search** - Auto-complete device search with operating system information
 - **📊 Intelligent Group Filtering** - Automatically filters out non-manageable groups:
   - Dynamic groups (membership rules)
   - Mail-enabled security groups
@@ -17,8 +18,9 @@ This Microsoft Edge extension allows Microsoft Entra (Azure AD) administrators t
 - **🛡️ Multi-tenant Support** - Works across different Azure AD tenants
 - **🔍 Admin Role Detection** - Validates admin permissions before operations
 - **🎯 Group Type Classification** - Clearly identifies Security Groups, Office 365 Groups, and Teams
-- **🚀 Bulk Group Operations** - Copy group memberships to other users or remove users from multiple groups
-- **🔄 Confirmation for Destructive Actions** - Requires confirmation before removing users from groups
+- **🚀 Dual Object Management** - Manage both user and device group memberships from a single interface
+- **🔄 Confirmation for Destructive Actions** - Requires confirmation before removing objects from groups
+- **📱 Tab-based Interface** - Clean, intuitive tabs for Users and Devices with identical functionality
 
 ## 🚀 Quick Start
 

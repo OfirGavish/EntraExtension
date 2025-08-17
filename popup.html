@@ -11,19 +11,48 @@
     <button id="settingsBtn">Settings</button>
   </div>
   <div id="authStatus" style="margin-bottom:10px;font-size:13px;"></div>
-  <label>Source User:</label>
-  <input type="text" id="sourceUser" placeholder="Search source user..." autocomplete="off">
-  <div id="sourceUserDropdown" class="dropdown"></div>
-  <button id="fetchGroups">Fetch Groups</button>
-  <div id="groupsList"></div>
-  <div class="button-row" id="groupActionsRow" style="display:none;">
-    <button id="removeFromGroups">Remove from Selected Groups</button>
+  
+  <!-- Tab Navigation -->
+  <div class="tab-container">
+    <div class="tab-nav">
+      <button class="tab-button active" data-tab="users">Users</button>
+      <button class="tab-button" data-tab="devices">Devices</button>
+    </div>
+    
+    <!-- Users Tab Content -->
+    <div id="users-tab" class="tab-content active">
+      <label>Source User:</label>
+      <input type="text" id="sourceUser" placeholder="Search source user..." autocomplete="off">
+      <div id="sourceUserDropdown" class="dropdown"></div>
+      <button id="fetchGroups">Fetch Groups</button>
+      <div id="groupsList"></div>
+      <div class="button-row" id="groupActionsRow" style="display:none;">
+        <button id="removeFromGroups">Remove from Selected Groups</button>
+      </div>
+      <label>Target User:</label>
+      <input type="text" id="targetUser" placeholder="Search target user..." autocomplete="off">
+      <div id="targetUserDropdown" class="dropdown"></div>
+      <button id="copyGroups">Copy Selected Groups</button>
+      <div id="status"></div>
+    </div>
+    
+    <!-- Devices Tab Content -->
+    <div id="devices-tab" class="tab-content">
+      <label>Source Device:</label>
+      <input type="text" id="sourceDevice" placeholder="Search source device..." autocomplete="off">
+      <div id="sourceDeviceDropdown" class="dropdown"></div>
+      <button id="fetchDeviceGroups">Fetch Groups</button>
+      <div id="deviceGroupsList"></div>
+      <div class="button-row" id="deviceGroupActionsRow" style="display:none;">
+        <button id="removeDeviceFromGroups">Remove from Selected Groups</button>
+      </div>
+      <label>Target Device:</label>
+      <input type="text" id="targetDevice" placeholder="Search target device..." autocomplete="off">
+      <div id="targetDeviceDropdown" class="dropdown"></div>
+      <button id="copyDeviceGroups">Copy Selected Groups</button>
+      <div id="deviceStatus"></div>
+    </div>
   </div>
-  <label>Target User:</label>
-  <input type="text" id="targetUser" placeholder="Search target user..." autocomplete="off">
-  <div id="targetUserDropdown" class="dropdown"></div>
-  <button id="copyGroups">Copy Selected Groups</button>
-  <div id="status"></div>
   <!-- Settings Modal -->
   <div id="settingsModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.6);z-index:1000;align-items:center;justify-content:center;">
     <div style="background:#222;padding:24px 20px 16px 20px;border-radius:8px;min-width:320px;max-width:90vw;box-shadow:0 2px 16px #000;position:relative;">

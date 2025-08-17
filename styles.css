@@ -9,6 +9,48 @@
 	margin-top: 0;
 	margin-bottom: 0;
 }
+
+/* Tab Navigation Styling */
+.tab-container {
+	margin-top: 10px;
+}
+.tab-nav {
+	display: flex;
+	gap: 2px;
+	margin-bottom: 16px;
+	background: #26334d;
+	border-radius: 8px;
+	padding: 4px;
+}
+.tab-button {
+	flex: 1;
+	padding: 8px 12px;
+	background: transparent;
+	color: #b3c7e6;
+	border: none;
+	border-radius: 6px;
+	font-size: 14px;
+	font-weight: 500;
+	cursor: pointer;
+	transition: all 0.2s;
+	margin: 0;
+	width: auto;
+}
+.tab-button:hover {
+	background: #2d3b55;
+	color: #e0eaff;
+}
+.tab-button.active {
+	background: linear-gradient(90deg, #2563eb 0%, #4ea1ff 100%);
+	color: #fff;
+	font-weight: 600;
+}
+.tab-content {
+	display: none;
+}
+.tab-content.active {
+	display: block;
+}
 body {
 	font-family: 'Segoe UI', Arial, sans-serif;
 	width: 320px;
@@ -74,6 +116,14 @@ button:hover, button:focus {
 	background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
 }
 
+/* Destructive action button styling for device tab */
+#removeDeviceFromGroups {
+	background: linear-gradient(90deg, #dc2626 0%, #ef4444 100%);
+}
+#removeDeviceFromGroups:hover, #removeDeviceFromGroups:focus {
+	background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
+}
+
 #groupsList {
 	margin: 14px 0 10px 0;
 	max-height: 120px;
@@ -102,6 +152,43 @@ button:hover, button:focus {
 	cursor: pointer;
 }
 #groupsList label {
+	margin: 0;
+	padding: 0;
+	color: #f3f6fa;
+	font-size: 15px;
+	cursor: pointer;
+	flex-grow: 1;
+}
+
+/* Device groups list styling - same as user groups */
+#deviceGroupsList {
+	margin: 14px 0 10px 0;
+	max-height: 120px;
+	overflow-y: auto;
+	background: #202736;
+	border-radius: 6px;
+	padding: 6px 0;
+	border: 1px solid #26334d;
+}
+#deviceGroupsList div {
+	padding: 4px 10px;
+	border-radius: 4px;
+	transition: background 0.15s;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+#deviceGroupsList div:hover {
+	background: #223a5e;
+}
+#deviceGroupsList .device-group-checkbox {
+	width: auto;
+	margin: 0;
+	padding: 0;
+	flex-shrink: 0;
+	cursor: pointer;
+}
+#deviceGroupsList label {
 	margin: 0;
 	padding: 0;
 	color: #f3f6fa;
@@ -157,6 +244,16 @@ button:hover, button:focus {
   box-sizing: border-box;  /* Ensures padding/border doesn't add extra width */
 }
 #targetUser {
+  width: 100%;
+  max-width: 100%;     /* Ensures it never exceeds container */
+  box-sizing: border-box;  /* Ensures padding/border doesn't add extra width */
+}
+#sourceDevice {
+  width: 100%;
+  max-width: 100%;     /* Ensures it never exceeds container */
+  box-sizing: border-box;  /* Ensures padding/border doesn't add extra width */
+}
+#targetDevice {
   width: 100%;
   max-width: 100%;     /* Ensures it never exceeds container */
   box-sizing: border-box;  /* Ensures padding/border doesn't add extra width */

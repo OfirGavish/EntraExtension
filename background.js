@@ -29,7 +29,8 @@ export async function interactiveLogin() {
       'https://graph.microsoft.com/User.ReadBasic.All',
       'https://graph.microsoft.com/User.Read.All',
       'https://graph.microsoft.com/Group.Read.All',
-      'https://graph.microsoft.com/GroupMember.ReadWrite.All'
+      'https://graph.microsoft.com/GroupMember.ReadWrite.All',
+      'https://graph.microsoft.com/Device.Read.All'
     ].join(' ');
 
     const authUrl = `https://login.microsoftonline.com/${TENANT}/oauth2/v2.0/authorize` +

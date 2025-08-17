@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Entra ID Group Membership Manager",
-  "version": "1.1.0",
-  "description": "Manage Entra ID group memberships - copy/remove users from groups. Secure OAuth 2.0 with intelligent filtering.",
+  "version": "1.2.0",
+  "description": "Manage Entra ID group memberships for users and devices - copy/remove from groups. Secure OAuth 2.0 with intelligent filtering.",
   "permissions": ["identity", "storage"],
   "background": {
     "service_worker": "background.js",

@@ -24,7 +24,9 @@ async function resolveNestedGroups(groupId, token, resolvedGroups = new Set()) {
 
     if (data.value) {
       for (const nestedGroup of data.value) {
-        await resolveNestedGroups(nestedGroup.id, token, resolvedGroups);
+        if (nestedGroup.id) { // Ensure ID exists to avoid errors
+          await resolveNestedGroups(nestedGroup.id, token, resolvedGroups);
+        }
       }
     }
   } catch (error) {

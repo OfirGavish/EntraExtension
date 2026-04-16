@@ -233,6 +233,134 @@ export async function signOut() {
   await chrome.storage.local.remove(['tokens', 'userInfo']);
 }
 
+// --- Nested Groups Handling ---
+
+// Add Group Member Handler
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === 'addGroupMember') {
+    const { groupId, memberId, token } = message.data;
+    addGroupMember(groupId, memberId, token).then(() => {
+      sendResponse({ success: true });
+    }).catch((error) => {
+      console.error('Error in addGroupMember:', error);
+      sendResponse({ success: false, error: error.message });
+    });
+    return true; // Keep the message channel open for async response
+  }
+});
+
+// Add Member to Group
+async function addGroupMember(groupId, memberId, accessToken) {
+  const url = `https://graph.microsoft.com/v1.0/groups/${groupId}/members/$ref`;
+  const body = {
+    '@odata.id': `https://graph.microsoft.com/v1.0/directoryObjects/${memberId}`
+  };
+
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${accessToken}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to add member: ${response.status} - ${errorText}`);
+  }
+}
+
+// Register handler for nested groups
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === 'handleNestedGroups') {
+    const { groupId, token } = message.data;
+    handleNestedGroups(groupId, token).then((nestedMembers) => {
+      sendResponse({ success: true, data: nestedMembers });
+    }).catch((error) => {
+      console.error('Error in handleNestedGroups:', error);
+      sendResponse({ success: false, error: error.message });
+    });
+    return true; // Keep the message channel open for async response
+  }
+});
+
+async function handleNestedGroups(groupId, accessToken) {
+  const nestedGroups = [];
+  const visitedGroups = new Set();
+
+  async function fetchNested(groupId) {
+    if (visitedGroups.has(groupId)) return;
+    visitedGroups.add(groupId);
+
+    // Fetch group details to check if role-assignable
+    const groupResponse = await fetch(`https://graph.microsoft.com/v1.0/groups/${groupId}`, {
+      headers: { 'Authorization': `Bearer ${accessToken}` }
+    });
+
+    if (!groupResponse.ok) {
+      console.error('Failed to fetch group details:', groupResponse.status);
+      return;
+    }
+
+    const groupDetails = await groupResponse.json();
+    if (groupDetails.isAssignableToRole) {
+      console.warn(`Skipping role-assignable group: ${groupId}`);
+      return;
+    }
+
+    const response = await fetch(`https://graph.microsoft.com/v1.0/groups/${groupId}/members`, {
+      headers: { 'Authorization': `Bearer ${accessToken}` }
+    });
+
+    if (!response.ok) {
+      console.error('Failed to fetch group members:', response.status);
+      return;
+    }
+
+    const { value } = await response.json();
+    for (const member of value) {
+      if (member['@odata.type'] === '#microsoft.graph.group') {
+        await fetchNested(member.id); // Recursive call for nested groups
+      } else if (member['@odata.type'] === '#microsoft.graph.user' || member['@odata.type'] === '#microsoft.graph.device') {
+        nestedGroups.push(member);
+      }
+    }
+  }
+
+  await fetchNested(groupId);
+  return nestedGroups;
+}
+async function handleNestedGroups(groupId, accessToken) {
+  const nestedGroups = [];
+  const visitedGroups = new Set();
+
+  async function fetchNested(groupId) {
+    if (visitedGroups.has(groupId)) return;
+    visitedGroups.add(groupId);
+
+    const response = await fetch(`https://graph.microsoft.com/v1.0/groups/${groupId}/members`, {
+      headers: { 'Authorization': `Bearer ${accessToken}` }
+    });
+
+    if (!response.ok) {
+      console.error('Failed to fetch group members:', response.status);
+      return;
+    }
+
+    const { value } = await response.json();
+    for (const member of value) {
+      if (member['@odata.type'] === '#microsoft.graph.group') {
+        nestedGroups.push(member);
+        await fetchNested(member.id);
+      }
+    }
+  }
+
+  await fetchNested(groupId);
+  return nestedGroups;
+}
+
 // Handle messages from popup
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   (async () => {

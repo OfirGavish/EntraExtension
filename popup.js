@@ -1,4 +1,39 @@
 // --- Authentication with background service worker ---
+
+// --- Nested Group Membership Handling ---
+async function fetchNestedGroupMemberships(groupId) {
+  try {
+    const token = await getAccessToken();
+    const nestedMembers = await sendMessage('handleNestedGroups', { groupId, token });
+
+// Add nested group handling to copy action
+async function copyGroupMemberships() {
+  const groupId = document.getElementById('sourceGroupId').value;
+  if (!groupId) {
+    alert('Group ID is required');
+    return;
+  }
+  try {
+    const nestedMembers = await fetchNestedGroupMemberships(groupId);
+    console.log('Fetched nested group memberships:', nestedMembers);
+    for (const member of nestedMembers) {
+      await sendMessage('addGroupMember', { groupId: targetGroupId, memberId: member.id });
+    }
+    alert('Nested group members copied successfully!');
+  } catch (error) {
+    console.error('Failed to fetch nested group memberships:', error);
+    alert('Error fetching nested group memberships. See console for details.');
+  }
+}
+
+document.getElementById('copyGroupMemberships').addEventListener('click', copyGroupMemberships);
+    console.log('Nested members:', nestedMembers);
+    return nestedMembers;
+  } catch (error) {
+    console.error('Failed to fetch nested group memberships:', error);
+    return [];
+  }
+}
 const signInBtn = document.getElementById('signInBtn');
 const authStatus = document.getElementById('authStatus');
 const settingsBtn = document.getElementById('settingsBtn');
@@ -173,7 +208,15 @@ const targetDeviceInput = document.getElementById('targetDevice');
 const targetDeviceDropdown = document.getElementById('targetDeviceDropdown');
 
 // User search for source user
-sourceUserInput.addEventListener('input', async () => {
+const debounce = (func, delay) => {
+  let timeout;
+  return (...args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), delay);
+  };
+};
+
+sourceUserInput.addEventListener('input', debounce(async () => {
   if (!isSignedIn) {
     authStatus.textContent = 'Please sign in first.';
     authStatus.style.color = 'orange';
@@ -195,7 +238,7 @@ sourceUserInput.addEventListener('input', async () => {
 });
 
 // User search for target user
-targetUserInput.addEventListener('input', async () => {
+targetUserInput.addEventListener('input', debounce(async () => {
   if (!isSignedIn) {
     authStatus.textContent = 'Please sign in first.';
     authStatus.style.color = 'orange';
